@@ -1,0 +1,11 @@
+google-auth
+google-auth-oauthlib
+google-auth-httplib2
+gspread
+pandas
+flask
+python-dotenv
+googlemaps
+google-api-python-client
+requests
+slack-sdk
