@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Near Move Out Messaging Tool</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        table.table th {
+            text-align: left;
+            vertical-align: middle;
+        }
+        textarea.copy-box {
+            min-height: 140px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container my-4">
+
+    <div class="d-flex align-items-center gap-3 mb-4">
+        <img src="{{ url_for('static', filename='pp_logo.png') }}" alt="Logo" style="height: 120px;">
+        <h2 class="m-0">Near Move Out Messaging Tool</h2>
+    </div>
+
+    <div class="row g-4">
+        <!-- LEFT: FORM -->
+        <div class="col-md-5">
+            <h4>Send Messages</h4>
+            <form method="POST" action="/send_messages">
+                <input type="hidden" name="filters" value="{{ filters }}">
+
+                <div class="mb-3">
+                    <label class="form-label">Landlord Name</label>
+                    <input type="text" name="ll_name" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Landlord Email</label>
+                    <input type="email" name="ll_email" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Insured Name</label>
+                    <input type="text" name="insured_name" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Address</label>
+                    <input type="text" name="address" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Lease End Date</label>
+                    <input type="text" name="lease_end_date" class="form-control" placeholder="YYYY-MM-DD" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Date Requested</label>
+                    <input type="text" name="date_requested" class="form-control" placeholder="YYYY-MM-DD" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Claim ID</label>
+                    <input type="text" name="claim_id" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        Number of Days From Lease End Date
+                    </label>
+                    <input type="number" name="num_days" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">RSD Amount</label>
+                    <input type="number" name="rsd_amount" class="form-control" required>
+                </div>
+
+
+                <button type="submit" class="btn btn-success">
+                    Click to Send Slack Message and Email
+                </button>
+            </form>
+        </div>
+
+        <!-- RIGHT: OUTPUTS -->
+        <div class="col-md-7">
+
+            {% if submitted_data %}
+            <div class="mb-4">
+                <h5>Submitted Form Values</h5>
+                {% if submitted_data_html %}
+                <div class="table-responsive">
+                    {{ submitted_data_html | safe }}
+                </div>
+                {% else %}
+                <ul class="list-group">
+                    {% for key, value in submitted_data.items() %}
+                        <li class="list-group-item">
+                            <strong>{{ key }}:</strong> {{ value }}
+                        </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            {% if rsd_results_html %}
+            <div class="mb-4">
+                <h5>Delivery Results</h5>
+                <div class="table-responsive">
+                    {{ rsd_results_html | safe }}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if nmo_results_html %}
+            <div class="mb-4">
+                <h5>Delivery Results</h5>
+                <div class="table-responsive">
+                    {{ nmo_results_html | safe }}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if gc_phone_template %}
+            <div class="mb-4">
+                <h5>Group Chat Message</h5>
+                <p class="mb-2"><strong>Copy and paste this for the groupchat:</strong></p>
+                <textarea class="form-control copy-box" readonly>{{ gc_phone_template }}</textarea>
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
