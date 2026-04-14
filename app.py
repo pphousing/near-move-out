@@ -103,6 +103,13 @@ def send_text(phone_num, message, first_name):
         "to":[phone_num],
         "userId":'USkdRcH9dR'
     }
+    elif first_name == 'Sara':
+        payload = {
+        "content": message,
+        "from":  'PN9mu12wlD',
+        "to":[phone_num],
+        "userId":'USPE5q7t2R'
+    }
     response = requests.post(url,headers=headers, json = payload)
     return response
 
@@ -124,7 +131,6 @@ def index():
 def send_messages():
     filters = json.loads(request.form.get('filters', '{}'))
 
-    category = str(request.form.get('category', ''))
     ll_name = str(request.form.get('ll_name', ''))
     ll_email = str(request.form.get('ll_email', ''))
     insured_name = str(request.form.get('insured_name', ''))
@@ -134,7 +140,6 @@ def send_messages():
     claim_id = str(request.form.get('claim_id', ''))
     num_days = int(request.form.get('num_days', 0))
     rsd_amount = int(request.form.get('rsd_amount', 0))
-    first_name = str(request.form.get('first_name', ''))
 
     gc_phone_template = (
         f"Hi {insured_name}! I hope you’re doing well. As a reminder, the lease for "
@@ -171,7 +176,6 @@ Claim ID #: {claim_id} Emailed/Texted GC
     nmo_results = []
 
     submitted_data = {
-        "Category": category,
         "Landlord Name": ll_name,
         "Landlord Email": ll_email,
         "Insured Name": insured_name,
@@ -181,7 +185,6 @@ Claim ID #: {claim_id} Emailed/Texted GC
         "Claim ID": claim_id,
         "Days Until Lease End": num_days,
         "RSD Amount": rsd_amount,
-        "PPH Relocation Specialist": first_name,
     }
 
     # 1) Slack - RSD channel
