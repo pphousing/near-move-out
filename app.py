@@ -144,7 +144,8 @@ def send_messages():
     gc_phone_template = (
         f"Hi {insured_name}! I hope you’re doing well. As a reminder, the lease for "
         f"{address} will be completed in {num_days} days. {ll_name} will be sending "
-        f"you check out instructions shortly, thank you!"
+        f"you check out instructions shortly. "
+        f" We strongly recommend a move-out walk-through inspection be conducted prior to {insured_name} departure to jointly assess the condition of the property, thank you!"
     )
 
     ll_email_template = (
